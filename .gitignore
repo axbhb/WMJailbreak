@@ -1,0 +1,29 @@
+# Large datasets and generated annotations
+data/**
+!data/
+!data/README.md
+
+# Local logs and run artifacts
+logs/
+*.log
+
+# Local model/cache directories
+models/
+hf_cache/
+.cache/
+
+# Python cache/build outputs
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local machine helper scripts
+scripts/run_wildguard_resume.cmd
+
+# Large/local references; keep links in README instead
+reference/*.pdf
+
+# Secrets and local config
+.env
+*.token
+evaluator_model_paths.json
