@@ -132,6 +132,62 @@ python scripts/annotate_transitions_with_classifiers.py \
   --resume
 ```
 
+After completion, repair and deduplicate:
+
+```bash
+python scripts/repair_jsonl_objects.py \
+  --input data/xguard-train/transitions/xguard_transitions_wildguard_harmbench.jsonl \
+  --output data/xguard-train/transitions/xguard_transitions_wildguard_harmbench.clean.jsonl
+```
+
+## Build Dreamer Reward Labels
+
+After WildGuard and HarmBench annotation, fuse the classifier outputs into the
+state, future-boundary, and reward fields needed by the world model:
+
+```bash
+python scripts/build_dreamer_rewards.py \
+  --input data/xguard-train/transitions/xguard_transitions_wildguard_harmbench.clean.jsonl \
+  --output data/xguard-train/transitions/xguard_transitions_rewards.jsonl \
+  --min-harmbench-coverage 0.95
+```
+
+This fills fields such as:
+
+- `action.request_harm_score`
+- `observation.risk_score`
+- `observation.unsafe_compliance_score`
+- `observation.partial_compliance_score`
+- `observation.risk_delta`
+- `future.boundary_flag`
+- `future.future_boundary`
+- `future.turns_to_boundary`
+- `reward.reward_value`
+
+If `--min-harmbench-coverage` fails, inspect the stats file and raw HarmBench
+outputs before training.
+
+## Split by Dialogue
+
+Split by `dialogue_id`, not by individual transition, to avoid leaking turns
+from the same multi-turn jailbreak trajectory across train/validation/test:
+
+```bash
+python scripts/split_transitions.py \
+  --input data/xguard-train/transitions/xguard_transitions_rewards.jsonl \
+  --output-dir data/xguard-train/splits \
+  --seed 13
+```
+
+Expected outputs:
+
+```text
+data/xguard-train/splits/train.jsonl
+data/xguard-train/splits/val.jsonl
+data/xguard-train/splits/test.jsonl
+data/xguard-train/splits/split_stats.json
+```
+
 ## Reference Papers
 
 - SafeDream: Safety World Model for Proactive Early Jailbreak Detection, arXiv:2604.16824

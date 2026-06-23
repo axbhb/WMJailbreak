@@ -458,7 +458,7 @@ Validation criteria:
 
 ### Step 2: Implement Label Fusion and Reward Construction
 
-New script to write:
+Implemented script:
 
 ```text
 scripts/build_dreamer_rewards.py
@@ -508,7 +508,7 @@ Need to tune thresholds after inspecting score distributions.
 
 Avoid leakage across turns from the same conversation.
 
-New script to write:
+Implemented script:
 
 ```text
 scripts/split_transitions.py
@@ -623,4 +623,3 @@ Do not commit large datasets, annotation JSONL files, logs, or model weights.
 - The current HarmBench behavior/context mapping is approximate because XGuard does not expose explicit harmful behavior labels.
 - Full model training and Dreamer planner code has not been implemented yet.
 - The current project is at the data/evaluator-preparation stage, not yet at model-training stage.
-

@@ -11,7 +11,13 @@ data/
     transitions/
       xguard_transitions.jsonl
       xguard_transitions_wildguard.clean.jsonl
-      xguard_transitions_scored.jsonl
+      xguard_transitions_wildguard_harmbench.clean.jsonl
+      xguard_transitions_rewards.jsonl
+    splits/
+      train.jsonl
+      val.jsonl
+      test.jsonl
+      split_stats.json
 ```
 
 Use the commands in the project README to recreate these files on a server.
